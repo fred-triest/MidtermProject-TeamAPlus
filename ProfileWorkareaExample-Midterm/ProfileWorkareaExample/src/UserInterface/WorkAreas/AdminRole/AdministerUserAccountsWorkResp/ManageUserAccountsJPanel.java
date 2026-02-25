@@ -8,6 +8,7 @@ package UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp;
 import Business.Business;
 import Business.UserAccounts.UserAccount;
 import Business.UserAccounts.UserAccountDirectory;
+import javax.swing.JOptionPane;
 
 
 import javax.swing.JPanel;
@@ -15,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author kal bugrara
+ * @author fredtriest
  */
 public class ManageUserAccountsJPanel extends javax.swing.JPanel {
 
@@ -34,35 +35,33 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
         refreshTable();
 
     }
-
+/**
+ * Clears and repopulates the user accounts table with new data
+ */
     public void refreshTable() {
 
-//clear supplier table
+        // Clear rows from table
         int rc = UserAccountTable.getRowCount();
-        int i;
-        for (i = rc - 1; i >= 0; i--) {
+        for (int i = rc -1; i >= 0; i--) {
             ((DefaultTableModel) UserAccountTable.getModel()).removeRow(i);
         }
-
-
-
+        
+        // Retrieve user account directory from business
         UserAccountDirectory uad = business.getUserAccountDirectory();
-
-       
-
+        if (uad == null) return;
+        
+        // Populate user accounts in table
         for (UserAccount ua : uad.getUserAccountList()) {
-
-            Object[] row = new Object[5];
+            if (ua == null) continue;
+            
+            Object[] row = new Object[3];
             row[0] = ua;
- //           row[1] = ua.getStatus(); //complete this..
- //           row[2] = ua.getLastUpdated()
- //           row[3] = 
-
+            row[1] = ua.getPersonId();
+            row[2] = ua.getRole();
+            
             ((DefaultTableModel) UserAccountTable.getModel()).addRow(row);
         }
-
     }
-
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -90,7 +89,7 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
             }
         });
         add(Back);
-        Back.setBounds(30, 300, 76, 32);
+        Back.setBounds(30, 300, 80, 23);
 
         Next.setText("Next >>");
         Next.addActionListener(new java.awt.event.ActionListener() {
@@ -99,27 +98,27 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
             }
         });
         add(Next);
-        Next.setBounds(500, 300, 80, 32);
+        Next.setBounds(500, 300, 80, 23);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("User Accounts");
         add(jLabel1);
-        jLabel1.setBounds(30, 90, 190, 19);
+        jLabel1.setBounds(30, 90, 190, 17);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel2.setText("Manage User Accounts");
         add(jLabel2);
-        jLabel2.setBounds(21, 20, 550, 29);
+        jLabel2.setBounds(21, 20, 550, 28);
 
         UserAccountTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "User Name", "Status", "Last Activity", "Last Updated"
+                "User Name", "Full Name", "Role"
             }
         ));
         UserAccountTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -142,11 +141,14 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_BackActionPerformed
 
     private void NextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextActionPerformed
-        // TODO add your handling code here:
-        if(selecteduseraccount==null) return;
-        AdminUserAccount mppd = new AdminUserAccount(selecteduseraccount, CardSequencePanel);
-        CardSequencePanel.add(mppd);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+    // Make sure user is selected
+    if (selecteduseraccount == null) {
+        JOptionPane.showMessageDialog(this, "You must select a user.", "No Selection", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    AdminUserAccount mppd = new AdminUserAccount(selecteduseraccount, CardSequencePanel);
+    CardSequencePanel.add(mppd);
+    ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
     }//GEN-LAST:event_NextActionPerformed
 
