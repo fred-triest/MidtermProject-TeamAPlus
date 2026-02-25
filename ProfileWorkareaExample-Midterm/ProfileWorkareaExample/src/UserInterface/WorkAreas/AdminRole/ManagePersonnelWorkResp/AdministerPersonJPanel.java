@@ -6,12 +6,20 @@
 package UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp;
 
 import Business.Business;
+import Business.Person.Person;
+import Business.Profiles.Profile;
+import Business.Profiles.EmployeeDirectory;
+import Business.Profiles.FacultyDirectory;
+import Business.Profiles.StudentDirectory;
+import Business.UserAccounts.UserAccountDirectory;
+
 
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author kal bugrara
+ * @author fredtriest
  */
 public class AdministerPersonJPanel extends javax.swing.JPanel {
 
@@ -19,19 +27,15 @@ public class AdministerPersonJPanel extends javax.swing.JPanel {
      * Creates new form ManageSuppliersJPanel
      */
     JPanel CardSequencePanel;
-
     Business business;
+    ManagePersonsJPanel managePersonsPanel;
 
-    public AdministerPersonJPanel(Business bz, JPanel jp) {
+    public AdministerPersonJPanel(Business bz, JPanel jp, ManagePersonsJPanel mpp) {
 
         CardSequencePanel = jp;
         this.business = bz;
+        this.managePersonsPanel = mpp;
         initComponents();
-
-
-    }
-
-    public void refreshTable() {
 
     }
 
@@ -45,7 +49,16 @@ public class AdministerPersonJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         Back = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        lblTitle = new javax.swing.JLabel();
+        lblName = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
+        lblUsername = new javax.swing.JLabel();
+        txtUsername = new javax.swing.JTextField();
+        lblPassword = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JTextField();
+        lblRole = new javax.swing.JLabel();
+        cmbRole = new javax.swing.JComboBox<>();
+        btnRegister = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setLayout(null);
@@ -57,12 +70,77 @@ public class AdministerPersonJPanel extends javax.swing.JPanel {
             }
         });
         add(Back);
-        Back.setBounds(30, 290, 76, 32);
+        Back.setBounds(30, 290, 80, 23);
 
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel2.setText("Manage Person Profile");
-        add(jLabel2);
-        jLabel2.setBounds(21, 20, 550, 29);
+        lblTitle.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        lblTitle.setText("Manage Person Profile");
+        add(lblTitle);
+        lblTitle.setBounds(21, 20, 550, 28);
+
+        lblName.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        lblName.setForeground(new java.awt.Color(255, 255, 255));
+        lblName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblName.setText("Name:");
+        add(lblName);
+        lblName.setBounds(120, 100, 70, 20);
+
+        txtName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNameActionPerformed(evt);
+            }
+        });
+        add(txtName);
+        txtName.setBounds(210, 100, 190, 23);
+
+        lblUsername.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        lblUsername.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsername.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblUsername.setText("Username:");
+        add(lblUsername);
+        lblUsername.setBounds(120, 140, 70, 20);
+
+        txtUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsernameActionPerformed(evt);
+            }
+        });
+        add(txtUsername);
+        txtUsername.setBounds(210, 140, 190, 23);
+
+        lblPassword.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        lblPassword.setForeground(new java.awt.Color(255, 255, 255));
+        lblPassword.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblPassword.setText("Password:");
+        add(lblPassword);
+        lblPassword.setBounds(120, 180, 70, 20);
+
+        txtPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPasswordActionPerformed(evt);
+            }
+        });
+        add(txtPassword);
+        txtPassword.setBounds(210, 180, 190, 23);
+
+        lblRole.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        lblRole.setForeground(new java.awt.Color(255, 255, 255));
+        lblRole.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblRole.setText("Role:");
+        add(lblRole);
+        lblRole.setBounds(120, 220, 70, 20);
+
+        cmbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Role", "Admin", "Faculty", "Student" }));
+        add(cmbRole);
+        cmbRole.setBounds(210, 220, 190, 23);
+
+        btnRegister.setText("Register");
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterActionPerformed(evt);
+            }
+        });
+        add(btnRegister);
+        btnRegister.setBounds(440, 290, 78, 23);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
@@ -70,13 +148,98 @@ public class AdministerPersonJPanel extends javax.swing.JPanel {
         CardSequencePanel.remove(this);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
-
     }//GEN-LAST:event_BackActionPerformed
+
+    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNameActionPerformed
+
+    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsernameActionPerformed
+
+    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPasswordActionPerformed
+
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+        // Validate fields
+        String name = txtName.getText().trim();
+        String username = txtUsername.getText().trim();
+        String password = txtPassword.getText().trim();
+        String role = (String) cmbRole.getSelectedItem();
+        
+        if (name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Name is required", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (username.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Username is required", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Password is required", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (role.equals("Select Role")) {
+            JOptionPane.showMessageDialog(this, "Role is required", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Create person
+        Person newPerson = business.getPersonDirectory().newPerson(name);
+        
+        // Assign Profile from selected role
+        if (role.equals("Admin")) {
+            business.getEmployeeDirectory().newEmployeeProfile(newPerson);
+        } else if (role.equals("Faculty")) {
+            business.getFacultyDirectory().newFacultyProfile(newPerson);
+        } else if (role.equals("Student")) {
+            business.getStudentDirectory().newStudentProfile(newPerson);
+        }
+        
+        // Create user
+        business.getUserAccountDirectory().newUserAccount(getProfileForPerson(newPerson, role), username, password);
+        
+        JOptionPane.showMessageDialog(this, "Registration successful!","Registration Success", JOptionPane.INFORMATION_MESSAGE);
+        
+        managePersonsPanel.refreshTable();
+        
+        // Clear fields
+        txtName.setText("");
+        txtUsername.setText("");
+        txtPassword.setText("");
+        cmbRole.setSelectedIndex(0);
+        
+    }//GEN-LAST:event_btnRegisterActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Back;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton btnRegister;
+    private javax.swing.JComboBox<String> cmbRole;
+    private javax.swing.JLabel lblName;
+    private javax.swing.JLabel lblPassword;
+    private javax.swing.JLabel lblRole;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JLabel lblUsername;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtPassword;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Gets the profile for the new person based on their role.
+     */
+    private Profile getProfileForPerson(Person p, String role) {
+        if (role.equals("Admin")) {
+            return business.getEmployeeDirectory().findEmployee(p.getPersonId());
+        } else if (role.equals("Faculty")) {
+            return business.getFacultyDirectory().findFaculty(p.getPersonId());
+        } else if (role.equals("Student")) {
+            return business.getStudentDirectory().findStudent(p.getPersonId());
+        } else {
+            return null;
+        }
+    }
 }
