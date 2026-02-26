@@ -11,7 +11,7 @@ import Business.Profiles.Profile;
 
 /**
  *
- * @author kal bugrara
+ * @author fredtriest
  */
 public class UserAccount {
     
@@ -20,9 +20,10 @@ public class UserAccount {
     String password;
     
     public UserAccount (Profile profile, String un, String pw){
+        
         username = un;
-         password = pw;
-         this.profile = profile;
+        password = pw;
+        this.profile = profile;
 
     }
 
@@ -33,29 +34,40 @@ public class UserAccount {
         return username;
     }
 
-        public boolean isMatch(String id){
-        if(getPersonId().equals(id)) return true;
-        return false;
-    }
-        public boolean IsValidUser(String un, String pw){
+    public boolean isMatch(String id){
         
-            if (username.equalsIgnoreCase(un) && password.equals(pw)) return true;
+        if(getPersonId().equals(id)) return true;
+            return false;
+    }
+    
+    public boolean IsValidUser(String un, String pw){
+        
+        if (username.equalsIgnoreCase(un) && password.equals(pw)) return true;
             else return false;
         
-        }
-        public String getRole(){
-            return profile.getRole();
-        }
+    }
+    
+    public String getRole(){
         
-        public Profile getAssociatedPersonProfile(){
-            return profile;
-        }
+        return profile.getRole();
+    }
+        
+    public Profile getAssociatedPersonProfile(){
+        
+        return profile;
+    }
+    
+    // updates login username
+    public void setUserLoginName(String newUsername) {
+        
+        this.username = newUsername;
+    }
         
     @Override
-        public String toString(){
+    public String toString(){
             
-            return getUserLoginName();
-        }
+        return getUserLoginName();
+    }
         
 }
 

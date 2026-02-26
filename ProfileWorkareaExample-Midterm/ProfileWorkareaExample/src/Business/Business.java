@@ -11,6 +11,7 @@ import Business.Person.PersonDirectory;
 import Business.Profiles.EmployeeDirectory;
 import Business.Profiles.FacultyDirectory;
 import Business.Profiles.StudentDirectory;
+import Business.Profiles.FacultyDirectory;
 
 import Business.UserAccounts.UserAccountDirectory;
 
@@ -30,6 +31,7 @@ public class Business {
     FacultyDirectory facultydirectory;
     CourseCatalog coursecatalog;
     CourseSchedule courseschedule;
+  
     
 
 
@@ -61,6 +63,10 @@ public class Business {
 
     public StudentDirectory getStudentDirectory(){
         return studentdirectory;
+    }
+    
+    public FacultyDirectory getFacultyDirectory() {
+        return facultydirectory;
     }
 
     // returns the faculty directory

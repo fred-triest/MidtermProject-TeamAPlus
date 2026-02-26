@@ -6,13 +6,16 @@
 package UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp;
 
 import Business.Business;
+import Business.Person.Person;
+import Business.Person.PersonDirectory;
 
-
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author kal bugrara
+ * @author fredtriest
  */
 public class ManagePersonsJPanel extends javax.swing.JPanel {
 
@@ -27,7 +30,32 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
         CardSequencePanel = jp;
         this.business = bz;
         initComponents();
+        
+        refreshTable();
 
+    }
+    
+    /**
+     * Clears and repopulates table with registered persons.
+     */
+    public void refreshTable() {
+        // Clear rows
+        DefaultTableModel model = (DefaultTableModel) tblPersons.getModel();
+        model.setRowCount(0);
+        
+        // Retrieve persons from directory
+        PersonDirectory pd = business.getPersonDirectory();
+        if (pd == null)
+            return;
+        
+        for (Person p : pd.getPersonList()) {
+            if (p == null) continue;
+            
+            Object[] row = new Object[2];
+            row[0] = p;
+            row[1] = getRoleForPerson(p);
+            model.addRow(row);
+        }
     }
 
 
@@ -42,8 +70,9 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
 
         Back = new javax.swing.JButton();
         Next = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblPersons = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setLayout(null);
@@ -55,7 +84,7 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
             }
         });
         add(Back);
-        Back.setBounds(20, 260, 76, 32);
+        Back.setBounds(20, 260, 80, 23);
 
         Next.setText("Next >>");
         Next.addActionListener(new java.awt.event.ActionListener() {
@@ -64,16 +93,28 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
             }
         });
         add(Next);
-        Next.setBounds(500, 260, 80, 32);
-
-        jLabel1.setText("Name");
-        add(jLabel1);
-        jLabel1.setBounds(20, 60, 190, 16);
+        Next.setBounds(500, 260, 80, 23);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel2.setText("Manage Personnel (HR)");
         add(jLabel2);
-        jLabel2.setBounds(21, 20, 550, 29);
+        jLabel2.setBounds(21, 20, 550, 28);
+
+        tblPersons.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Name", "Role"
+            }
+        ));
+        jScrollPane1.setViewportView(tblPersons);
+
+        add(jScrollPane1);
+        jScrollPane1.setBounds(100, 60, 420, 180);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
@@ -87,7 +128,7 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
     private void NextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextActionPerformed
         // TODO add your handling code here:
         
-        AdministerPersonJPanel mppd = new AdministerPersonJPanel(business, CardSequencePanel);
+        AdministerPersonJPanel mppd = new AdministerPersonJPanel(business, CardSequencePanel, this);
         CardSequencePanel.add(mppd);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
@@ -97,8 +138,25 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Back;
     private javax.swing.JButton Next;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblPersons;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Checks the role of a person and which directory they belong to.
+     */
+    private String getRoleForPerson(Person p) {
+        if (p == null)
+            return "Unassigned";
+        
+        if (business.getEmployeeDirectory().findEmployee(p.getPersonId()) != null)
+            return "Admin";
+        if (business.getFacultyDirectory().findFaculty(p.getPersonId()) != null)
+            return "Faculty";
+        if (business.getStudentDirectory().findStudent(p.getPersonId()) != null)
+            return "Student";
+        
+        return "Not assigned";
+    }
 }
