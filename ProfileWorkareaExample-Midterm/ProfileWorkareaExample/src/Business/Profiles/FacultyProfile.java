@@ -13,13 +13,14 @@ import Business.Person.Person;
  */
 public class FacultyProfile extends Profile {
 
-
-
+    // creates a new faculty profile linked to a person
     public FacultyProfile(Person p) {
 
         super(p);
 
     }
+
+    // returns "Faculty" for role-based access control
     @Override
     public String getRole(){
         return  "Faculty";
