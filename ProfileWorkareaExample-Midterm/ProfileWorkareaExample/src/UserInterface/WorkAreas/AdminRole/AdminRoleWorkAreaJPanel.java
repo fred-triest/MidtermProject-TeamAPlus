@@ -11,10 +11,12 @@
 package UserInterface.WorkAreas.AdminRole;
 
 import Business.Business;
+import Business.UserAccounts.UserAccount;
 import UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp.ManageUserAccountsJPanel;
 import UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp.ManagePersonsJPanel;
 import UserInterface.WorkAreas.AdminRole.ManageStudentsWorkResp.ManageStudentsJPanel;
 import UserInterface.WorkAreas.AdminRole.ManageFacultyWorkResp.ManageFacultyJPanel;
+import UserInterface.WorkAreas.AdminRole.MyProfileWorkResp.MyProfileJPanel;
 
 import javax.swing.JPanel;
 
@@ -26,15 +28,17 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     javax.swing.JPanel CardSequencePanel;
     Business business;
+    UserAccount loggedInUser;
 
     /**
      * Creates new form UnitRiskWorkArea
      */
 
-    public AdminRoleWorkAreaJPanel(Business b, JPanel clp) {
+    public AdminRoleWorkAreaJPanel(Business b, JPanel clp, UserAccount ua) {
 
         business = b;
         this.CardSequencePanel = clp;
+        this.loggedInUser = ua;
         initComponents();
 
     }
@@ -190,8 +194,12 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnManageStudentsActionPerformed
 
     private void btnMyProfileIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMyProfileIdentifyEventsActionPerformed
+        //Manage admin profile
+        MyProfileJPanel mp = new MyProfileJPanel(business, CardSequencePanel,loggedInUser);
+        CardSequencePanel.add("My Profile", mp);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_btnMyProfileIdentifyEventsActionPerformed
-
+ 
     private void btnManageFacultyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageFacultyActionPerformed
         ManageFacultyJPanel mfp = new ManageFacultyJPanel(business, CardSequencePanel);
         CardSequencePanel.add("Manage Faculty", mfp);
