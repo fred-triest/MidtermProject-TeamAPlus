@@ -22,4 +22,9 @@ public class FacultyProfile extends Profile {
         return "Faculty";
     }
     
+    @Override
+    public String toString() {
+        return getPerson().getPersonId();
+    }
+    
 }
