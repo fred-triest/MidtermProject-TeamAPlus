@@ -11,7 +11,6 @@ import Business.Person.PersonDirectory;
 import Business.Profiles.EmployeeDirectory;
 import Business.Profiles.FacultyDirectory;
 import Business.Profiles.StudentDirectory;
-import Business.Profiles.FacultyDirectory;
 
 import Business.UserAccounts.UserAccountDirectory;
 
@@ -65,10 +64,6 @@ public class Business {
         return studentdirectory;
     }
     
-    public FacultyDirectory getFacultyDirectory() {
-        return facultydirectory;
-    }
-
     // returns the faculty directory
     public FacultyDirectory getFacultyDirectory() {
         return facultydirectory;
