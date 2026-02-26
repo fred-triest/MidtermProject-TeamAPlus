@@ -11,7 +11,11 @@
 package UserInterface.WorkAreas.FacultyRole;
 
 import Business.Business;
-import UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp.ManagePersonsJPanel;
+import Business.Profiles.FacultyProfile;
+import UserInterface.WorkAreas.FacultyRole.ManageCourseWorkResp.ManageCoursesJPanel;
+import UserInterface.WorkAreas.FacultyRole.ManageStudentsWorkResp.ManageStudentProfilesJPanel;
+import UserInterface.WorkAreas.FacultyRole.MyProfileWorkResp.FacultyMyProfileJPanel;
+import UserInterface.WorkAreas.FacultyRole.PerformanceReportsWorkResp.PerformanceReportsJPanel;
 import javax.swing.JPanel;
 
 /**
@@ -22,14 +26,13 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
 
     javax.swing.JPanel CardSequencePanel;
     Business business;
+    FacultyProfile facultyprofile;
 
-    /**
-     * Creates new form UnitRiskWorkArea
-     */
-
-    public FacultyWorkAreaJPanel(Business b, JPanel clp) {
+    // creates the faculty work area with access to business data and faculty profile
+    public FacultyWorkAreaJPanel(Business b, FacultyProfile fp, JPanel clp) {
 
         business = b;
+        this.facultyprofile = fp;
         this.CardSequencePanel = clp;
         initComponents();
 
@@ -148,35 +151,35 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4IdentifyResourceAssetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4IdentifyResourceAssetsActionPerformed
-        // TODO add your handling code here:
+        // opens the manage courses panel
         CardSequencePanel.removeAll();
-
-        ManagePersonsJPanel aos = new ManagePersonsJPanel(business, CardSequencePanel);
-
-        CardSequencePanel.add("Manage Persons", aos);
+        ManageCoursesJPanel mcp = new ManageCoursesJPanel(business, facultyprofile, CardSequencePanel);
+        CardSequencePanel.add("ManageCourses", mcp);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-
     }//GEN-LAST:event_jButton4IdentifyResourceAssetsActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
-
-  
+        // opens the manage student profiles panel
+        CardSequencePanel.removeAll();
+        ManageStudentProfilesJPanel msp = new ManageStudentProfilesJPanel(business, facultyprofile, CardSequencePanel);
+        CardSequencePanel.add("ManageStudents", msp);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton6IdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6IdentifyEventsActionPerformed
-        // TODO add your handling code here:
+        // opens the my profile panel
         CardSequencePanel.removeAll();
-        //    IdentifyEventTypes iet= new IdentifyEventTypes(businessunit, CardSequencePanel);
-
-        //    CardSequencePanel.add("IdentifyEventTypes", iet);
+        FacultyMyProfileJPanel fmp = new FacultyMyProfileJPanel(business, facultyprofile, CardSequencePanel);
+        CardSequencePanel.add("MyProfile", fmp);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-        //((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");
 }//GEN-LAST:event_jButton6IdentifyEventsActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
-
+        // opens the performance reports panel
+        CardSequencePanel.removeAll();
+        PerformanceReportsJPanel prp = new PerformanceReportsJPanel(business, facultyprofile, CardSequencePanel);
+        CardSequencePanel.add("PerformanceReports", prp);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 }//GEN-LAST:event_jButton11ActionPerformed
 
 
