@@ -22,5 +22,10 @@ public class StudentProfile extends Profile {
     public String getRole() {
         return "Student";
     }
+    
+    @Override
+    public String toString() {
+        return getPerson().getPersonId();
+    }
 
 }

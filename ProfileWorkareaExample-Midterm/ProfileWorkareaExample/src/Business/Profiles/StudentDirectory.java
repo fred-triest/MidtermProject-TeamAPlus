@@ -42,4 +42,8 @@ public class StudentDirectory {
             return null; //not found after going through the whole list
          }
     
+    // returns list of student profiles.
+    public ArrayList<StudentProfile> getStudentList() {
+        return studentlist;
+    }
 }
