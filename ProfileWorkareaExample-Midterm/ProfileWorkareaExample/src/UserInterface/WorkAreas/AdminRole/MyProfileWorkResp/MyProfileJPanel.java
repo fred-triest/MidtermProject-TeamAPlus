@@ -79,8 +79,6 @@ public class MyProfileJPanel extends javax.swing.JPanel {
         lblName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblName.setText("Name:");
 
-        txtName.setEditable(false);
-
         lblUsername.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         lblUsername.setForeground(new java.awt.Color(255, 255, 255));
         lblUsername.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -181,13 +179,20 @@ public class MyProfileJPanel extends javax.swing.JPanel {
         // Update admin
         String newUsername = txtUsername.getText().trim();
         String newPassword = txtPassword.getText().trim();
+        String newName = txtName.getText().trim();
         
         if (newUsername.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Username required", "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
-        //Update username
+        if (newName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Name required.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        //Update name and username
+        loggedInUser.getAssociatedPersonProfile().getPerson().setPersonId(newName);
         loggedInUser.setUserLoginName(newUsername);
         
         // Update password only if a new one is entered

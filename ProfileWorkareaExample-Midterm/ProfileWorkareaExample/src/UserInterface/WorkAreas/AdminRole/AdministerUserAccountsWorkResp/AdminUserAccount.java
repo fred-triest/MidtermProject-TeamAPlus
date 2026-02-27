@@ -121,8 +121,6 @@ public class AdminUserAccount extends javax.swing.JPanel {
         txtPassword.setBounds(210, 220, 190, 23);
         add(txtUsername);
         txtUsername.setBounds(210, 100, 190, 23);
-
-        txtName.setEditable(false);
         add(txtName);
         txtName.setBounds(210, 140, 190, 23);
 
@@ -151,16 +149,23 @@ public class AdminUserAccount extends javax.swing.JPanel {
         // Validates and updates username and pw
         String newUsername = txtUsername.getText().trim();
         String newPassword = txtPassword.getText().trim();
+        String newName = txtName.getText().trim();
         
         if (newUsername.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Username can't be empty.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Username is required.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
-        // update username
+        if (newName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Name is required.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Update name and username
+        selecteduseraccount.getAssociatedPersonProfile().getPerson().setPersonId(newName);
         selecteduseraccount.setUserLoginName(newUsername);
         
-        // update password
+        // Update password
         if (!newPassword.isEmpty()) {
             selecteduseraccount.setPassword(newPassword);
         }
