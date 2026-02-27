@@ -4,17 +4,36 @@
  */
 package UserInterface.WorkAreas.StudentRole.CourseWorkWorkResp;
 
+import Business.Business;
+import Business.Profiles.StudentProfile;
+import Business.Course.CourseOffer;
+import Business.Course.SeatAssignment;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
- * @author wakingstardust
+ * @author larrytsao (wakingstardust)
  */
 public class CourseWorkJPanel extends javax.swing.JPanel {
 
+    private Business business;
+    private StudentProfile student;
+    private JPanel CardSequencePanel;
+    
     /**
      * Creates new form CourseWorkJPanel
      */
-    public CourseWorkJPanel() {
+    public CourseWorkJPanel(Business b, StudentProfile spp, JPanel clp) {
+        
+        this.business = b;
+        this.student = spp;
+        this.CardSequencePanel = clp;
+    
         initComponents();
+        
+        loadMyCourses();
+        
     }
 
     /**
