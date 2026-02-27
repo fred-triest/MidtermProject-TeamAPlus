@@ -4,18 +4,59 @@
  */
 package UserInterface.WorkAreas.StudentRole.CourseWorkWorkResp;
 
+import Business.Business;
+import Business.Profiles.StudentProfile;
+import Business.Course.CourseOffer;
+import Business.Course.SeatAssignment;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
- * @author wakingstardust
+ * @author larrytsao (wakingstardust)
  */
 public class CourseWorkJPanel extends javax.swing.JPanel {
 
+    private Business business;
+    private StudentProfile student;
+    private JPanel CardSequencePanel;
+    
     /**
      * Creates new form CourseWorkJPanel
      */
-    public CourseWorkJPanel() {
+    public CourseWorkJPanel(Business b, StudentProfile spp, JPanel clp) {
+        
+        this.business = b;
+        this.student = spp;
+        this.CardSequencePanel = clp;
+    
         initComponents();
+        
+        loadMyCourses();
+        
     }
+    
+    private void loadMyCourses() {
+        
+        DefaultTableModel model = (DefaultTableModel) tblCourses.getModel();
+        model.setRowCount(0);
+
+        for (CourseOffer co : business.getCourseSchedule().getCourseoffers()) {
+            for (SeatAssignment sa : co.getSeatassignments()) {
+                if (sa.getStudent().getPersonId().equals(student.getPerson().getPersonId())) {
+                    Object[] row = new Object[4];
+                    
+                    row[0] = co.getCourse().toString();
+                    row[1] = co.getCourse().getCredits();
+                    row[2] = sa.getGrade();
+                    row[3] = "Enrolled";
+                    
+                    model.addRow(row);
+                    
+                }
+            }
+        }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
