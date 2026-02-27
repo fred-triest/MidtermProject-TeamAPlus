@@ -15,6 +15,12 @@ import Business.Profiles.StudentProfile;
 import Business.Profiles.FacultyDirectory;
 import Business.Profiles.FacultyProfile;
 
+import Business.Course.Course;
+import Business.Course.CourseCatalog;
+import Business.Course.CourseOffer;
+import Business.Course.CourseSchedule;
+import Business.Course.FacultyAssignment;
+import Business.Course.SeatAssignment;
 import Business.UserAccounts.UserAccount;
 import Business.UserAccounts.UserAccountDirectory;
 
@@ -69,6 +75,36 @@ class ConfigureABusiness {
         UserAccount studentaccount1 = uadirectory.newUserAccount(studentprofile1, "potter", "****");
         UserAccount studentaccount2 = uadirectory.newUserAccount(studentprofile2, "granger", "****");
         UserAccount studentaccount3 = uadirectory.newUserAccount(studentprofile3, "weasley", "****");
+
+// Create courses in the catalog
+        CourseCatalog coursecatalog = business.getCourseCatalog();
+        Course course1 = coursecatalog.addCourse("INFO5100", "Application Engineering", 4, "Object-oriented design and development");
+        Course course2 = coursecatalog.addCourse("INFO5200", "Database Management", 4, "Database design and SQL fundamentals");
+        Course course3 = coursecatalog.addCourse("INFO5300", "Web Development", 3, "Full-stack web application development");
+
+// Create course offerings for this semester
+        CourseSchedule schedule = business.getCourseSchedule();
+        CourseOffer offer1 = schedule.addCourseOffer(course1);
+        CourseOffer offer2 = schedule.addCourseOffer(course2);
+        CourseOffer offer3 = schedule.addCourseOffer(course3);
+
+// Assign faculty to courses - Jones teaches INFO5100 and INFO5300, Dumbledore teaches INFO5200
+        FacultyAssignment fa1 = new FacultyAssignment(person002, offer1);
+        FacultyAssignment fa2 = new FacultyAssignment(person003, offer2);
+        FacultyAssignment fa3 = new FacultyAssignment(person002, offer3);
+
+// Enroll students in courses
+        SeatAssignment sa1 = offer1.assignSeat(person004); // Potter in INFO5100
+        SeatAssignment sa2 = offer1.assignSeat(person005); // Granger in INFO5100
+        SeatAssignment sa3 = offer2.assignSeat(person004); // Potter in INFO5200
+        SeatAssignment sa4 = offer2.assignSeat(person006); // Weasley in INFO5200
+        SeatAssignment sa5 = offer3.assignSeat(person005); // Granger in INFO5300
+        SeatAssignment sa6 = offer3.assignSeat(person006); // Weasley in INFO5300
+
+// Set some sample grades
+        sa1.setGrade("A");
+        sa2.setGrade("A+");
+        sa3.setGrade("B+");
 
         return business;
 

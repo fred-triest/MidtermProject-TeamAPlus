@@ -1,30 +1,34 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package Business.Profiles;
 
 import Business.Person.Person;
 
 /**
- * Reps a Faculty member's profile in the access control layer
- * Extends the profile class and returns Faculty as the role
- * @author fredtriest
+ *
+ * @author Cohen Powell
  */
 public class FacultyProfile extends Profile {
-    
+
+    // creates a new faculty profile linked to a person
     public FacultyProfile(Person p) {
+
         super(p);
+
     }
-    
+
+    // returns "Faculty" for role-based access control
     @Override
-    public String getRole() {
-        return "Faculty";
+    public String getRole(){
+        return  "Faculty";
     }
-    
+
     @Override
     public String toString() {
         return getPerson().getPersonId();
     }
-    
+
 }

@@ -5,16 +5,21 @@
  */
 package Business;
 
+import Business.Course.CourseCatalog;
+import Business.Course.CourseSchedule;
 import Business.Person.PersonDirectory;
 import Business.Profiles.EmployeeDirectory;
-import Business.Profiles.StudentDirectory;
 import Business.Profiles.FacultyDirectory;
+import Business.Profiles.StudentDirectory;
 
 import Business.UserAccounts.UserAccountDirectory;
 
 /**
  * Holds directories for university business model
  * @author fredtriest
+ *
+ * @author kal bugrara
+ * @author cohenpowell
  */
 public class Business {
 
@@ -25,6 +30,9 @@ public class Business {
     UserAccountDirectory useraccountdirectory;
     StudentDirectory studentdirectory;
     FacultyDirectory facultydirectory;
+    CourseCatalog coursecatalog;
+    CourseSchedule courseschedule;
+  
     
 
     // Initialize business with all directories
@@ -36,7 +44,8 @@ public class Business {
         useraccountdirectory = new UserAccountDirectory();
         studentdirectory = new StudentDirectory();
         facultydirectory = new FacultyDirectory();
-
+        coursecatalog = new CourseCatalog();
+        courseschedule = new CourseSchedule("Spring 2026");
 
     }
     
@@ -63,6 +72,14 @@ public class Business {
     // Returns the faculty directory
     public FacultyDirectory getFacultyDirectory() {
         return facultydirectory;
+    }
+
+    public CourseCatalog getCourseCatalog() {
+        return coursecatalog;
+    }
+
+    public CourseSchedule getCourseSchedule() {
+        return courseschedule;
     }
 
 }
