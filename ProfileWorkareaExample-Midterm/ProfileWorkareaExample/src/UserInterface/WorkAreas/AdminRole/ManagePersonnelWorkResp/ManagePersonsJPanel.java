@@ -118,7 +118,7 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
-        // TODO add your handling code here:
+        // Removes this panel and return to previous view
         CardSequencePanel.remove(this);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
  //       ((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");
@@ -126,8 +126,7 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_BackActionPerformed
 
     private void NextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextActionPerformed
-        // TODO add your handling code here:
-        
+        // Opens register person form
         AdministerPersonJPanel mppd = new AdministerPersonJPanel(business, CardSequencePanel, this);
         CardSequencePanel.add(mppd);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
@@ -143,9 +142,8 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
     private javax.swing.JTable tblPersons;
     // End of variables declaration//GEN-END:variables
 
-    /**
-     * Checks the role of a person and which directory they belong to.
-     */
+    
+    // Checks the role of a person and which directory they belong to.
     private String getRoleForPerson(Person p) {
         if (p == null)
             return "Unassigned";

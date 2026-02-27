@@ -13,8 +13,8 @@ import Business.Profiles.FacultyDirectory;
 import Business.UserAccounts.UserAccountDirectory;
 
 /**
- *
- * @author kal bugrara
+ * Holds directories for university business model
+ * @author fredtriest
  */
 public class Business {
 
@@ -27,7 +27,7 @@ public class Business {
     FacultyDirectory facultydirectory;
     
 
-
+    // Initialize business with all directories
     public Business(String n) {
         name = n;
 
@@ -39,24 +39,28 @@ public class Business {
 
 
     }
-
+    
+    // Returns the person directory
     public PersonDirectory getPersonDirectory() {
         return persondirectory;
     }
-
+    
+    // Returns the user account directory
     public UserAccountDirectory getUserAccountDirectory() {
         return useraccountdirectory;
     }
 
-
+    // Returns the employee directory
     public EmployeeDirectory getEmployeeDirectory() {
         return employeedirectory;
     }
 
+    // Returns the student directory
     public StudentDirectory getStudentDirectory(){
         return studentdirectory;
     }
     
+    // Returns the faculty directory
     public FacultyDirectory getFacultyDirectory() {
         return facultydirectory;
     }
