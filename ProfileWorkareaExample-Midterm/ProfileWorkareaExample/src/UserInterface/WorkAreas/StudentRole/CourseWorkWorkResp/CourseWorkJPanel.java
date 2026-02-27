@@ -35,6 +35,28 @@ public class CourseWorkJPanel extends javax.swing.JPanel {
         loadMyCourses();
         
     }
+    
+    private void loadMyCourses() {
+        
+        DefaultTableModel model = (DefaultTableModel) tblCourses.getModel();
+        model.setRowCount(0);
+
+        for (CourseOffer co : business.getCourseSchedule().getCourseoffers()) {
+            for (SeatAssignment sa : co.getSeatassignments()) {
+                if (sa.getStudent().getPersonId().equals(student.getPerson().getPersonId())) {
+                    Object[] row = new Object[4];
+                    
+                    row[0] = co.getCourse().toString();
+                    row[1] = co.getCourse().getCredits();
+                    row[2] = sa.getGrade();
+                    row[3] = "Enrolled";
+                    
+                    model.addRow(row);
+                    
+                }
+            }
+        }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
