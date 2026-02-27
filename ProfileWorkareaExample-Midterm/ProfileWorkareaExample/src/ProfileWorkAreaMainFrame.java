@@ -27,15 +27,11 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
 
     Business business;
 
-    /**
-     * Creates new form PricingMainFrame
-     */
-
     public ProfileWorkAreaMainFrame() {
         initComponents();
         business = ConfigureABusiness.initialize();
+        setSize(800,600);
         
-
     }
 
     public void insert(JPanel jpanel) {
