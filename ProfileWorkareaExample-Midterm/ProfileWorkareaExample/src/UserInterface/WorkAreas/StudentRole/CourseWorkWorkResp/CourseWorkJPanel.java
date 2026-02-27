@@ -8,6 +8,7 @@ import Business.Business;
 import Business.Profiles.StudentProfile;
 import Business.Course.CourseOffer;
 import Business.Course.SeatAssignment;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -159,10 +160,22 @@ public class CourseWorkJPanel extends javax.swing.JPanel {
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         // TODO add your handling code here:
+        String assignmentName = txtAssignment.getText().trim();
+        
+        if (assignmentName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter an assignment name.", "Missing Input", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        JOptionPane.showMessageDialog(this, "Assignment \"" + assignmentName + "\" submitted successfully!", "Submitted", JOptionPane.INFORMATION_MESSAGE);
+        txtAssignment.setText("");
+        
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+        CardSequencePanel.remove(this);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        
     }//GEN-LAST:event_btnBackActionPerformed
 
 
