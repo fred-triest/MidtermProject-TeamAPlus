@@ -131,11 +131,14 @@ public class AdministerPersonJPanel extends javax.swing.JPanel {
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         // Validates fields and registers new person with role and account
+        
+        // Input collection - trim() for whitespace
         String name = txtName.getText().trim();
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
         String role = (String) cmbRole.getSelectedItem();
         
+        // Validation - validate every field with validation error messages
         if (name.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Name is required", "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -153,10 +156,10 @@ public class AdministerPersonJPanel extends javax.swing.JPanel {
             return;
         }
         
-        // Create person
+        // Person creation - Person in PersonDirectory (base layer, every user has a person
         Person newPerson = business.getPersonDirectory().newPerson(name);
         
-        // Assign Profile from selected role
+        // Profile assignment - Creates profile and adds to directory. How ACL knows what each person can do
         if (role.equals("Admin")) {
             business.getEmployeeDirectory().newEmployeeProfile(newPerson);
         } else if (role.equals("Faculty")) {
@@ -165,14 +168,15 @@ public class AdministerPersonJPanel extends javax.swing.JPanel {
             business.getStudentDirectory().newStudentProfile(newPerson);
         }
         
-        // Create user
+        // User creation - links profile we created with un and pw (checked at login)
         business.getUserAccountDirectory().newUserAccount(getProfileForPerson(newPerson, role), username, password);
         
         JOptionPane.showMessageDialog(this, "Registration successful!","Registration Success", JOptionPane.INFORMATION_MESSAGE);
         
+        // Post registration cleanup - table refreshes with new person
         managePersonsPanel.refreshTable();
         
-        // Clear fields
+        // Clear fields so admin can create another user right away
         txtName.setText("");
         txtUsername.setText("");
         txtPassword.setText("");
