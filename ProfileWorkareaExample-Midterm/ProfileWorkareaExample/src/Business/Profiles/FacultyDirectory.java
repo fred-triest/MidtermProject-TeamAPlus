@@ -46,5 +46,14 @@ public class FacultyDirectory {
     public ArrayList<FacultyProfile> getFacultyList() {
         return facultylist;
     }
-
+    
+    /**
+     * Removes a faculty profile from the directory
+     */
+    public void removeFaculty(FacultyProfile fp) {
+        if (fp == null)
+            return;
+        facultylist.remove(fp);
+    }
+    
 }

@@ -5,28 +5,29 @@
  */
 package UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp;
 
+import Business.Business;
 import Business.UserAccounts.UserAccount;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- *
+ * Detail panel for viewing and editing a selected user account.
  * @author fredtriest
  */
 
 public class AdminUserAccount extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ManageSuppliersJPanel
-     */
     JPanel CardSequencePanel;
-
     UserAccount selecteduseraccount;
+    Business business;
+    ManageUserAccountsJPanel manageUserAccountsPanel;
 
-    public AdminUserAccount(UserAccount sua, JPanel jp) {
+    public AdminUserAccount(UserAccount sua, JPanel jp, Business bz, ManageUserAccountsJPanel muap) {
 
         CardSequencePanel = jp;
         selecteduseraccount= sua;
+        business = bz;
+        manageUserAccountsPanel = muap;
         initComponents();
         loadUser();
 
@@ -43,6 +44,7 @@ public class AdminUserAccount extends javax.swing.JPanel {
         txtUsername.setText(selecteduseraccount.getUserLoginName());
         txtName.setText(selecteduseraccount.getPersonId());
         txtRole.setText(selecteduseraccount.getRole());
+        txtPassword.setText(selecteduseraccount.getPassword());
     }
     
    
@@ -59,12 +61,15 @@ public class AdminUserAccount extends javax.swing.JPanel {
         btnUpdate = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
-        lblRole = new javax.swing.JLabel();
+        lblPassword = new javax.swing.JLabel();
         lblUsername1 = new javax.swing.JLabel();
         lblName1 = new javax.swing.JLabel();
-        txtRole = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JTextField();
         txtUsername = new javax.swing.JTextField();
         txtName = new javax.swing.JTextField();
+        btnDelete = new javax.swing.JButton();
+        lblRole1 = new javax.swing.JLabel();
+        txtRole = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setLayout(null);
@@ -92,12 +97,12 @@ public class AdminUserAccount extends javax.swing.JPanel {
         add(btnBack);
         btnBack.setBounds(40, 290, 100, 23);
 
-        lblRole.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        lblRole.setForeground(new java.awt.Color(255, 255, 255));
-        lblRole.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblRole.setText("Role:");
-        add(lblRole);
-        lblRole.setBounds(120, 180, 70, 20);
+        lblPassword.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        lblPassword.setForeground(new java.awt.Color(255, 255, 255));
+        lblPassword.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblPassword.setText("Password:");
+        add(lblPassword);
+        lblPassword.setBounds(120, 220, 70, 20);
 
         lblUsername1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         lblUsername1.setForeground(new java.awt.Color(255, 255, 255));
@@ -112,37 +117,41 @@ public class AdminUserAccount extends javax.swing.JPanel {
         lblName1.setText("Name:");
         add(lblName1);
         lblName1.setBounds(120, 140, 70, 20);
-
-        txtRole.setEditable(false);
-        txtRole.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtRoleActionPerformed(evt);
-            }
-        });
-        add(txtRole);
-        txtRole.setBounds(210, 180, 190, 23);
-
-        txtUsername.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsernameActionPerformed(evt);
-            }
-        });
+        add(txtPassword);
+        txtPassword.setBounds(210, 220, 190, 23);
         add(txtUsername);
         txtUsername.setBounds(210, 100, 190, 23);
 
         txtName.setEditable(false);
-        txtName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNameActionPerformed(evt);
-            }
-        });
         add(txtName);
         txtName.setBounds(210, 140, 190, 23);
+
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+        add(btnDelete);
+        btnDelete.setBounds(270, 340, 72, 23);
+
+        lblRole1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        lblRole1.setForeground(new java.awt.Color(255, 255, 255));
+        lblRole1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblRole1.setText("Role:");
+        add(lblRole1);
+        lblRole1.setBounds(120, 180, 70, 20);
+
+        txtRole.setEditable(false);
+        add(txtRole);
+        txtRole.setBounds(210, 180, 190, 23);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        // Make sure username is not empty before updating
+        // Validates and updates username and pw
         String newUsername = txtUsername.getText().trim();
+        String newPassword = txtPassword.getText().trim();
+        
         if (newUsername.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Username can't be empty.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -150,6 +159,12 @@ public class AdminUserAccount extends javax.swing.JPanel {
         
         // update username
         selecteduseraccount.setUserLoginName(newUsername);
+        
+        // update password
+        if (!newPassword.isEmpty()) {
+            selecteduseraccount.setPassword(newPassword);
+        }
+        
         JOptionPane.showMessageDialog(this, "User updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
         
         // Go back to user list
@@ -160,34 +175,42 @@ public class AdminUserAccount extends javax.swing.JPanel {
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
-         CardSequencePanel.remove(this);
+        // Returns to user accounts list
+        CardSequencePanel.remove(this);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
 
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void txtRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRoleActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtRoleActionPerformed
-
-    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsernameActionPerformed
-
-    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNameActionPerformed
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // Deletes the user confirmation
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this user?", "Confirm Delete",JOptionPane.YES_NO_OPTION);
+        if (confirm != JOptionPane.YES_OPTION)
+        return;
+        
+        // Delete user
+        business.getUserAccountDirectory().removeUserAccount(selecteduseraccount);
+        manageUserAccountsPanel.refreshTable();;
+        
+        JOptionPane.showMessageDialog(this, "User deleted!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        
+        // Back to user list
+        CardSequencePanel.remove(this);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblName1;
-    private javax.swing.JLabel lblRole;
+    private javax.swing.JLabel lblPassword;
+    private javax.swing.JLabel lblRole1;
     private javax.swing.JLabel lblUsername1;
     private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtRole;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables

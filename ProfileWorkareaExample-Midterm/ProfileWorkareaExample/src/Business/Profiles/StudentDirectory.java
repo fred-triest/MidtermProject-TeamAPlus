@@ -10,8 +10,8 @@ import Business.Person.Person;
 import java.util.ArrayList;
 
 /**
- *
- * @author kal bugrara
+ * Stores all StudentProfile objects
+ * @author fredtriest
  */
 public class StudentDirectory {
 
@@ -24,6 +24,7 @@ public class StudentDirectory {
 
     }
 
+    // Creates a new student profile and adds to directory
     public StudentProfile newStudentProfile(Person p) {
 
         StudentProfile sp = new StudentProfile(p);
@@ -31,6 +32,7 @@ public class StudentDirectory {
         return sp;
     }
 
+    // Finds and returns a student by id
     public StudentProfile findStudent(String id) {
 
         for (StudentProfile sp : studentlist) {
@@ -45,5 +47,12 @@ public class StudentDirectory {
     // returns list of student profiles.
     public ArrayList<StudentProfile> getStudentList() {
         return studentlist;
+    }
+    
+    // removes student from directory
+    public void removeStudent(StudentProfile sp) {
+        if (sp == null)
+            return;
+        studentlist.remove(sp);
     }
 }

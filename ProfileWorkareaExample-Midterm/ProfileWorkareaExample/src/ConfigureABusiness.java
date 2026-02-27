@@ -34,6 +34,8 @@ class ConfigureABusiness {
 
     static Business initialize() {
         Business business = new Business("Information Systems");
+        if (business == null)
+            return null;
 
 // Create Persons
       PersonDirectory persondirectory = business.getPersonDirectory();

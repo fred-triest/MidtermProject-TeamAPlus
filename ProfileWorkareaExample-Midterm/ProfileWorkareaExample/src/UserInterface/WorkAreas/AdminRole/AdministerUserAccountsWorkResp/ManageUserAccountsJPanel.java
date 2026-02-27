@@ -20,9 +20,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ManageUserAccountsJPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ManageSuppliersJPanel
-     */
     JPanel CardSequencePanel;
     Business business;
     UserAccount selecteduseraccount;
@@ -35,9 +32,7 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
         refreshTable();
 
     }
-/**
- * Clears and repopulates the user accounts table with new data
- */
+
     public void refreshTable() {
 
         // Clear rows from table
@@ -133,7 +128,7 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
-        // TODO add your handling code here:
+        // Removes this panel and returns to previous view
         CardSequencePanel.remove(this);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
  //       ((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");
@@ -141,19 +136,19 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_BackActionPerformed
 
     private void NextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextActionPerformed
-    // Make sure user is selected
+    // Navigates to selected user account detail panel
     if (selecteduseraccount == null) {
         JOptionPane.showMessageDialog(this, "You must select a user.", "No Selection", JOptionPane.WARNING_MESSAGE);
         return;
     }
-    AdminUserAccount mppd = new AdminUserAccount(selecteduseraccount, CardSequencePanel);
+    AdminUserAccount mppd = new AdminUserAccount(selecteduseraccount, CardSequencePanel, business, this);
     CardSequencePanel.add(mppd);
     ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
     }//GEN-LAST:event_NextActionPerformed
 
     private void UserAccountTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserAccountTableMousePressed
-        // Extracts the row (uaser account) in the table that is selected by the user
+        // Sets selected user account from table row
         int size = UserAccountTable.getRowCount();
         int selectedrow = UserAccountTable.getSelectionModel().getLeadSelectionIndex();
 

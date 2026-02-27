@@ -21,9 +21,8 @@ public class ManageStudentsJPanel extends javax.swing.JPanel {
     JPanel CardSequencePanel;
     Business business;
     StudentProfile selectedStudent;
-    /**
-     * Creates new form ManageStudentsJPanel
-     */
+    
+    //Creates new form ManageStudentsJPanel
     public ManageStudentsJPanel(Business bz, JPanel jp) {
         CardSequencePanel = jp;
         this.business = bz;
@@ -31,9 +30,7 @@ public class ManageStudentsJPanel extends javax.swing.JPanel {
         refreshTable();
     }
     
-    /**
-     * Clear and repopulate table
-     */
+    // Clear and repopulate table
     public void refreshTable() {
         DefaultTableModel model = (DefaultTableModel) tblStudents.getModel();
         model.setRowCount(0);
@@ -121,15 +118,16 @@ public class ManageStudentsJPanel extends javax.swing.JPanel {
                 .addContainerGap(40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(btnBack)
                         .addGap(400, 400, 400)
-                        .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(32, 32, 32))
         );
         layout.setVerticalGroup(
@@ -148,7 +146,7 @@ public class ManageStudentsJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
+        // Removes this panel and returns to previous view
         CardSequencePanel.remove(this);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
         //       ((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");
@@ -161,13 +159,13 @@ public class ManageStudentsJPanel extends javax.swing.JPanel {
             return;
         }
 
-        AdministerStudentJPanel mppd = new AdministerStudentJPanel(business, CardSequencePanel, selectedStudent);
+        AdministerStudentJPanel mppd = new AdministerStudentJPanel(business, CardSequencePanel, selectedStudent, this);
         CardSequencePanel.add(mppd);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void tblStudentsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblStudentsMousePressed
-        // Show selected student details
+        // Sets selected student from table row
         int selectedrow = tblStudents.getSelectionModel().getLeadSelectionIndex();
         int size = tblStudents.getRowCount();
         if (selectedrow < 0 || selectedrow > size - 1)

@@ -3,38 +3,33 @@
  * and open the template in the editor.
  */
 
- /*
- * WorkAreaJPanel.java
- *
- * Created on May 17, 2020, 8:35:29 AM
- */
 package UserInterface.WorkAreas.AdminRole;
 
 import Business.Business;
+import Business.UserAccounts.UserAccount;
 import UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp.ManageUserAccountsJPanel;
 import UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp.ManagePersonsJPanel;
 import UserInterface.WorkAreas.AdminRole.ManageStudentsWorkResp.ManageStudentsJPanel;
 import UserInterface.WorkAreas.AdminRole.ManageFacultyWorkResp.ManageFacultyJPanel;
+import UserInterface.WorkAreas.AdminRole.MyProfileWorkResp.MyProfileJPanel;
 
 import javax.swing.JPanel;
 
 /**
- *
- * @author kal
+ * Main work area for admin role showing all abilities
+ * @author fredtriest
  */
 public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     javax.swing.JPanel CardSequencePanel;
     Business business;
+    UserAccount loggedInUser;
 
-    /**
-     * Creates new form UnitRiskWorkArea
-     */
-
-    public AdminRoleWorkAreaJPanel(Business b, JPanel clp) {
+    public AdminRoleWorkAreaJPanel(Business b, JPanel clp, UserAccount ua) {
 
         business = b;
         this.CardSequencePanel = clp;
+        this.loggedInUser = ua;
         initComponents();
 
     }
@@ -162,7 +157,7 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdministerUserAccountsIdentifyResourceAssetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministerUserAccountsIdentifyResourceAssetsActionPerformed
-        // TODO add your handling code here:
+        // Opens manage user accounts panel
 
         ManageUserAccountsJPanel aos = new ManageUserAccountsJPanel(business, CardSequencePanel);
 
@@ -172,7 +167,7 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAdministerUserAccountsIdentifyResourceAssetsActionPerformed
 
     private void btnRegisterPersonsHRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterPersonsHRActionPerformed
-        // TODO add your handling code here:
+        // Opens register persons panel
 
         ManagePersonsJPanel aos = new ManagePersonsJPanel(business, CardSequencePanel);
 
@@ -182,7 +177,7 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRegisterPersonsHRActionPerformed
 
     private void btnManageStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageStudentsActionPerformed
-        // Manage students
+        // Opens manage students panel
         ManageStudentsJPanel mppd = new ManageStudentsJPanel(business, CardSequencePanel);
         CardSequencePanel.add("Manage Students", mppd);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
@@ -190,9 +185,14 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnManageStudentsActionPerformed
 
     private void btnMyProfileIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMyProfileIdentifyEventsActionPerformed
+        // Opens my profile panel
+        MyProfileJPanel mp = new MyProfileJPanel(business, CardSequencePanel,loggedInUser);
+        CardSequencePanel.add("My Profile", mp);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_btnMyProfileIdentifyEventsActionPerformed
-
+ 
     private void btnManageFacultyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageFacultyActionPerformed
+        // Opens manage faculty panel
         ManageFacultyJPanel mfp = new ManageFacultyJPanel(business, CardSequencePanel);
         CardSequencePanel.add("Manage Faculty", mfp);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
