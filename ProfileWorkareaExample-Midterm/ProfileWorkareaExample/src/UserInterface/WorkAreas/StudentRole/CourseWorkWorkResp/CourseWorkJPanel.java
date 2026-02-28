@@ -40,6 +40,7 @@ public class CourseWorkJPanel extends javax.swing.JPanel {
     private void loadMyCourses() {
         
         DefaultTableModel model = (DefaultTableModel) tblCourses.getModel();
+        
         model.setRowCount(0);
 
         for (CourseOffer co : business.getCourseSchedule().getCourseoffers()) {
