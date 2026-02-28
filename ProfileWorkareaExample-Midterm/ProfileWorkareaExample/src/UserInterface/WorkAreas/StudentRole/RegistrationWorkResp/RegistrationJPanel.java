@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
+
 
 
 /**
@@ -274,8 +276,12 @@ public class RegistrationJPanel extends javax.swing.JPanel {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         
-        CardSequencePanel.remove(this);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        CardSequencePanel.removeAll();
+        StudentWorkAreaJPanel workArea = new StudentWorkAreaJPanel(business, student, CardSequencePanel);
+        
+        CardSequencePanel.add("student", workArea);
+        CardSequencePanel.revalidate();
+        CardSequencePanel.repaint();
         
     }//GEN-LAST:event_btnBackActionPerformed
 

@@ -8,6 +8,7 @@ import Business.Business;
 import Business.Profiles.StudentProfile;
 import Business.Course.CourseOffer;
 import Business.Course.SeatAssignment;
+import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -173,8 +174,14 @@ public class CourseWorkJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        CardSequencePanel.remove(this);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+          
+        CardSequencePanel.removeAll();
+        StudentWorkAreaJPanel workArea = new StudentWorkAreaJPanel(business, student, CardSequencePanel);
+        
+        CardSequencePanel.add("student", workArea);
+        CardSequencePanel.revalidate();
+        CardSequencePanel.repaint();
+        
         
     }//GEN-LAST:event_btnBackActionPerformed
 
