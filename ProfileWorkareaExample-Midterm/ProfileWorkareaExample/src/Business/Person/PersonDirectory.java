@@ -8,8 +8,8 @@ package Business.Person;
 import java.util.ArrayList;
 
 /**
- *
- * @author kal bugrara
+ * Stores all person objects in the app
+ * @author fredtriest
  */
 public class PersonDirectory {
     
@@ -21,6 +21,7 @@ public class PersonDirectory {
 
     }
 
+    // Creates a new person and adds it to the directory
     public Person newPerson(String id) {
 
         Person p = new Person(id);
@@ -28,6 +29,7 @@ public class PersonDirectory {
         return p;
     }
 
+    // Finds and returns a person by id
     public Person findPerson(String id) {
 
         for (Person p : personlist) {
@@ -36,7 +38,7 @@ public class PersonDirectory {
                 return p;
             }
         }
-            return null; //not found after going through the whole list
+            return null;
         }
     
     // Returns list of all persons in directory

@@ -13,6 +13,7 @@ package UserInterface.WorkAreas.StudentRole;
 import Business.Business;
 import Business.Profiles.StudentProfile;
 import javax.swing.JPanel;
+import UserInterface.WorkAreas.StudentRole.CourseWorkWorkResp.CourseWorkJPanel;
 
 /**
  *
@@ -170,7 +171,14 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4IdentifyResourceAssetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4IdentifyResourceAssetsActionPerformed
+        // TODO add your handling code here:
         
+        CardSequencePanel.removeAll();
+        CourseWorkJPanel cwp = new CourseWorkJPanel(business, student, CardSequencePanel);
+        
+        CardSequencePanel.add("CourseWork", cwp);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+
 
     }//GEN-LAST:event_jButton4IdentifyResourceAssetsActionPerformed
 

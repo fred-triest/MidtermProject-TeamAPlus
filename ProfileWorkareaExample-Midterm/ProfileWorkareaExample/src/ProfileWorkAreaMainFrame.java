@@ -27,15 +27,11 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
 
     Business business;
 
-    /**
-     * Creates new form PricingMainFrame
-     */
-
     public ProfileWorkAreaMainFrame() {
         initComponents();
         business = ConfigureABusiness.initialize();
+        setSize(800,600);
         
-
     }
 
     public void insert(JPanel jpanel) {
@@ -74,15 +70,6 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
         });
 
         jLabel1.setText("User Name");
-
-        UserNameTextField.setText("admin");
-
-        PasswordTextField.setText("****");
-        PasswordTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PasswordTextFieldActionPerformed(evt);
-            }
-        });
 
         jLabel2.setText("Password");
 
@@ -131,7 +118,6 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
-        // TODO add your handling code here:
         //      WorkAreaJPanel ura = new WorkAreaJPanel(workareajpanl);
 
         String un = UserNameTextField.getText();
@@ -152,7 +138,7 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
 
         if (profile instanceof EmployeeProfile) {
 
-            adminworkarea = new AdminRoleWorkAreaJPanel(business, CardSequencePanel);
+            adminworkarea = new AdminRoleWorkAreaJPanel(business, CardSequencePanel, useraccount);
             CardSequencePanel.removeAll();
             CardSequencePanel.add("Admin", adminworkarea);
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
@@ -180,10 +166,6 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_LoginButtonActionPerformed
-
-    private void PasswordTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PasswordTextFieldActionPerformed
 
     /**
      * @param args the command line arguments

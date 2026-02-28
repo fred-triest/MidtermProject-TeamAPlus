@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *Display all faculty for admin to manage
+ * Displays table of all faculty for admins to view and update
  * @author fredtriest
  */
 public class ManageFacultyJPanel extends javax.swing.JPanel {
@@ -21,9 +21,7 @@ public class ManageFacultyJPanel extends javax.swing.JPanel {
     JPanel CardSequencePanel;
     Business business;
     FacultyProfile selectedFaculty;
-    /**
-     * Creates new form ManageFacultyJPanel
-     */
+
     public ManageFacultyJPanel(Business bz, JPanel jp) {
         CardSequencePanel = jp;
         this.business = bz;
@@ -31,9 +29,7 @@ public class ManageFacultyJPanel extends javax.swing.JPanel {
         refreshTable();
     }
     
-    /**
-     * Clear and repopulate faculty table
-     */
+    // Clear and repopulate faculty table
     public void refreshTable() {
         DefaultTableModel model = (DefaultTableModel) tblFaculty.getModel();
         model.setRowCount(0);
@@ -153,13 +149,13 @@ public class ManageFacultyJPanel extends javax.swing.JPanel {
             return;
         }
 
-        AdministerFacultyJPanel mfp = new AdministerFacultyJPanel(business, CardSequencePanel, selectedFaculty);
-        CardSequencePanel.add(mfp);
+        AdministerFacultyJPanel afp = new AdministerFacultyJPanel(business, CardSequencePanel, selectedFaculty, this);
+        CardSequencePanel.add(afp);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void tblFacultyMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFacultyMousePressed
-        // Show selected student details
+        // Sets selected faculty from table row
         int selectedrow = tblFaculty.getSelectionModel().getLeadSelectionIndex();
         int size = tblFaculty.getRowCount();
         if (selectedrow < 0 || selectedrow > size - 1)
@@ -168,7 +164,7 @@ public class ManageFacultyJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tblFacultyMousePressed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
+        // Removes this panel and returns to previous view
         CardSequencePanel.remove(this);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
         //       ((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");

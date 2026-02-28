@@ -8,7 +8,7 @@ package Business.Profiles;
 import Business.Person.Person;
 
 /**
- *
+ * Represents a student's profile
  * @author fredtriest
  */
 public class StudentProfile extends Profile {
@@ -38,6 +38,7 @@ public class StudentProfile extends Profile {
         this.interests = interests;
     }
 
+    // Returns Student as the role
     @Override
     public String getRole() {
         return "Student";
