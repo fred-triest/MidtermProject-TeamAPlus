@@ -13,16 +13,36 @@ import Business.Person.Person;
  */
 public class StudentProfile extends Profile {
 
+    private String hobbies;
+    private String interests;
+
     public StudentProfile(Person p) {
         super(p);
+        this.hobbies = "";
+        this.interests = "";
+    }
 
+    public String getHobbies() {
+        return hobbies;
+    }
+
+    public void setHobbies(String hobbies) {
+        this.hobbies = hobbies;
+    }
+
+    public String getInterests() {
+        return interests;
+    }
+
+    public void setInterests(String interests) {
+        this.interests = interests;
     }
 
     @Override
     public String getRole() {
         return "Student";
     }
-    
+
     @Override
     public String toString() {
         return getPerson().getPersonId();

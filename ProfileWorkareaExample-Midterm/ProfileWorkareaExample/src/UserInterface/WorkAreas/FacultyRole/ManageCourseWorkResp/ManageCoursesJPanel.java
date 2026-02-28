@@ -5,10 +5,14 @@
 package UserInterface.WorkAreas.FacultyRole.ManageCourseWorkResp;
 
 import Business.Business;
+import Business.Course.Course;
 import Business.Course.CourseOffer;
 import Business.Course.SeatAssignment;
 import Business.Profiles.FacultyProfile;
 import java.util.ArrayList;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -51,6 +55,7 @@ public class ManageCoursesJPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         gradeField = new javax.swing.JTextField();
         saveGradeBtn = new javax.swing.JButton();
+        viewCourseDetailsBtn = new javax.swing.JButton();
         backBtn = new javax.swing.JButton();
 
         setLayout(null);
@@ -109,6 +114,15 @@ public class ManageCoursesJPanel extends javax.swing.JPanel {
         add(saveGradeBtn);
         saveGradeBtn.setBounds(250, 380, 120, 25);
 
+        viewCourseDetailsBtn.setText("View/Edit Course Details");
+        viewCourseDetailsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewCourseDetailsBtnActionPerformed(evt);
+            }
+        });
+        add(viewCourseDetailsBtn);
+        viewCourseDetailsBtn.setBounds(390, 380, 180, 25);
+
         backBtn.setText("<< Back");
         backBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,6 +140,10 @@ public class ManageCoursesJPanel extends javax.swing.JPanel {
     private void saveGradeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveGradeBtnActionPerformed
         saveGrade();
     }//GEN-LAST:event_saveGradeBtnActionPerformed
+
+    private void viewCourseDetailsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCourseDetailsBtnActionPerformed
+        viewAndEditCourseDetails();
+    }//GEN-LAST:event_viewCourseDetailsBtnActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         CardSequencePanel.remove(this);
@@ -191,6 +209,65 @@ public class ManageCoursesJPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, "Grade saved successfully.");
     }
 
+    // opens a dialog to view and edit the selected course details
+    private void viewAndEditCourseDetails() {
+        int courseIndex = courseCombo.getSelectedIndex();
+        if (courseIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a course first.");
+            return;
+        }
+
+        CourseOffer selected = facultyCourses.get(courseIndex);
+        Course course = selected.getCourse();
+
+        // build an editable form using a panel with labels and text fields
+        JTextField nameField = new JTextField(course.getCoursename(), 20);
+        JTextField creditsField = new JTextField(String.valueOf(course.getCredits()), 5);
+        JTextField descField = new JTextField(course.getDescription(), 30);
+
+        JPanel editPanel = new JPanel();
+        editPanel.setLayout(new java.awt.GridLayout(4, 2, 5, 5));
+        editPanel.add(new JLabel("Course Number:"));
+        editPanel.add(new JLabel(course.getCoursenumber())); // not editable
+        editPanel.add(new JLabel("Course Name:"));
+        editPanel.add(nameField);
+        editPanel.add(new JLabel("Credits:"));
+        editPanel.add(creditsField);
+        editPanel.add(new JLabel("Description:"));
+        editPanel.add(descField);
+
+        int result = JOptionPane.showConfirmDialog(this, editPanel,
+                "View / Edit Course Details", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (result == JOptionPane.OK_OPTION) {
+            // update the course with new values
+            String newName = nameField.getText().trim();
+            String newCreditsStr = creditsField.getText().trim();
+            String newDesc = descField.getText().trim();
+
+            if (newName.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Course name cannot be empty.");
+                return;
+            }
+
+            int newCredits;
+            try {
+                newCredits = Integer.parseInt(newCreditsStr);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Credits must be a number.");
+                return;
+            }
+
+            course.setCoursename(newName);
+            course.setCredits(newCredits);
+            course.setDescription(newDesc);
+
+            // refresh the dropdown to show updated name
+            loadFacultyCourses();
+            JOptionPane.showMessageDialog(this, "Course details updated successfully.");
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
     private javax.swing.JComboBox<String> courseCombo;
@@ -201,5 +278,6 @@ public class ManageCoursesJPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton saveGradeBtn;
     private javax.swing.JTable studentTable;
+    private javax.swing.JButton viewCourseDetailsBtn;
     // End of variables declaration//GEN-END:variables
 }

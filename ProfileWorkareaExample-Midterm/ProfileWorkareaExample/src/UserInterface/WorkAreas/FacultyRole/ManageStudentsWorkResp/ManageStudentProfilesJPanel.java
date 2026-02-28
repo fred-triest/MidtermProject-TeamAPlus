@@ -8,6 +8,7 @@ import Business.Business;
 import Business.Course.CourseOffer;
 import Business.Course.SeatAssignment;
 import Business.Profiles.FacultyProfile;
+import Business.Profiles.StudentProfile;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -175,7 +176,7 @@ public class ManageStudentProfilesJPanel extends javax.swing.JPanel {
         return count;
     }
 
-    // shows details for the selected student
+    // shows details for the selected student including hobbies, interests, and academic progress
     private void viewStudentDetails() {
         int selectedRow = studentTable.getSelectedRow();
         if (selectedRow < 0) {
@@ -190,21 +191,71 @@ public class ManageStudentProfilesJPanel extends javax.swing.JPanel {
         SeatAssignment sa = selected.getSeatassignments().get(selectedRow);
         String studentName = sa.getStudent().getPersonId();
 
-        // build a summary of all courses and grades for this student
+        // look up the student profile for hobbies and interests
+        StudentProfile sp = business.getStudentDirectory().findStudent(studentName);
+
         StringBuilder details = new StringBuilder();
         details.append("Student: ").append(studentName).append("\n\n");
-        details.append("Enrolled Courses:\n");
+
+        // show hobbies and interests if available
+        if (sp != null) {
+            String hobbies = sp.getHobbies();
+            String interests = sp.getInterests();
+            if (hobbies != null && !hobbies.isEmpty()) {
+                details.append("Hobbies: ").append(hobbies).append("\n");
+            }
+            if (interests != null && !interests.isEmpty()) {
+                details.append("Interests: ").append(interests).append("\n");
+            }
+            details.append("\n");
+        }
+
+        // academic progress - enrolled courses, grades, and GPA
+        details.append("Academic Progress:\n");
+        double totalPoints = 0;
+        int gradedCount = 0;
 
         for (CourseOffer co : business.getCourseSchedule().getCourseoffers()) {
             for (SeatAssignment s : co.getSeatassignments()) {
                 if (s.getStudent().getPersonId().equals(studentName)) {
                     details.append("  - ").append(co.getCourse().toString())
                            .append(" | Grade: ").append(s.getGrade()).append("\n");
+                    double pts = convertGradeToPoints(s.getGrade());
+                    if (pts >= 0) {
+                        totalPoints += pts;
+                        gradedCount++;
+                    }
                 }
             }
         }
 
+        if (gradedCount > 0) {
+            double gpa = totalPoints / gradedCount;
+            details.append("\nOverall GPA: ").append(String.format("%.2f", gpa));
+        } else {
+            details.append("\nOverall GPA: No grades yet");
+        }
+
         JOptionPane.showMessageDialog(this, details.toString(), "Student Details", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    // converts letter grade to GPA points
+    private double convertGradeToPoints(String grade) {
+        if (grade == null || grade.equals("N/A")) return -1;
+        switch (grade) {
+            case "A+": return 4.0;
+            case "A": return 4.0;
+            case "A-": return 3.7;
+            case "B+": return 3.3;
+            case "B": return 3.0;
+            case "B-": return 2.7;
+            case "C+": return 2.3;
+            case "C": return 2.0;
+            case "C-": return 1.7;
+            case "D": return 1.0;
+            case "F": return 0.0;
+            default: return -1;
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
