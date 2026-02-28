@@ -60,8 +60,16 @@ class ConfigureABusiness {
 // Student Profiles
         StudentDirectory studentdirectory = business.getStudentDirectory();
         StudentProfile studentprofile1 = studentdirectory.newStudentProfile(person004);
+        studentprofile1.setHobbies("Quidditch, Flying");
+        studentprofile1.setInterests("Defense Against the Dark Arts, Potions");
+
         StudentProfile studentprofile2 = studentdirectory.newStudentProfile(person005);
+        studentprofile2.setHobbies("Reading, Research");
+        studentprofile2.setInterests("Charms, Arithmancy, History of Magic");
+
         StudentProfile studentprofile3 = studentdirectory.newStudentProfile(person006);
+        studentprofile3.setHobbies("Chess, Eating");
+        studentprofile3.setInterests("Care of Magical Creatures, Herbology");
 
    
 // Create User accounts that link to specific profiles
