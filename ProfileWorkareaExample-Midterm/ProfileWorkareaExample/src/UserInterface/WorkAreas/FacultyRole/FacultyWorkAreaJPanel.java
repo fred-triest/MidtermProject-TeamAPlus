@@ -152,7 +152,6 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
 
     private void jButton4IdentifyResourceAssetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4IdentifyResourceAssetsActionPerformed
         // opens the manage courses panel
-        CardSequencePanel.removeAll();
         ManageCoursesJPanel mcp = new ManageCoursesJPanel(business, facultyprofile, CardSequencePanel);
         CardSequencePanel.add("ManageCourses", mcp);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
@@ -160,7 +159,6 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // opens the manage student profiles panel
-        CardSequencePanel.removeAll();
         ManageStudentProfilesJPanel msp = new ManageStudentProfilesJPanel(business, facultyprofile, CardSequencePanel);
         CardSequencePanel.add("ManageStudents", msp);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
@@ -168,7 +166,6 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
 
     private void jButton6IdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6IdentifyEventsActionPerformed
         // opens the my profile panel
-        CardSequencePanel.removeAll();
         FacultyMyProfileJPanel fmp = new FacultyMyProfileJPanel(business, facultyprofile, CardSequencePanel);
         CardSequencePanel.add("MyProfile", fmp);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
@@ -176,7 +173,6 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // opens the performance reports panel
-        CardSequencePanel.removeAll();
         PerformanceReportsJPanel prp = new PerformanceReportsJPanel(business, facultyprofile, CardSequencePanel);
         CardSequencePanel.add("PerformanceReports", prp);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);

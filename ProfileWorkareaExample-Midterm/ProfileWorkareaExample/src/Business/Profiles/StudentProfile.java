@@ -13,10 +13,29 @@ import Business.Person.Person;
  */
 public class StudentProfile extends Profile {
 
-    // Creates student profile linked to a person
+    private String hobbies;
+    private String interests;
+
     public StudentProfile(Person p) {
         super(p);
+        this.hobbies = "";
+        this.interests = "";
+    }
 
+    public String getHobbies() {
+        return hobbies;
+    }
+
+    public void setHobbies(String hobbies) {
+        this.hobbies = hobbies;
+    }
+
+    public String getInterests() {
+        return interests;
+    }
+
+    public void setInterests(String interests) {
+        this.interests = interests;
     }
 
     // Returns Student as the role
@@ -24,8 +43,7 @@ public class StudentProfile extends Profile {
     public String getRole() {
         return "Student";
     }
-    
-    // Returns student's name as string
+
     @Override
     public String toString() {
         return getPerson().getPersonId();
