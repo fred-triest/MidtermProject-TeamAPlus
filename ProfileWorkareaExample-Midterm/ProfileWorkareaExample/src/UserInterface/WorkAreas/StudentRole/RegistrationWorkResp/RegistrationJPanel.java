@@ -18,7 +18,7 @@ import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
 
 /**
  * Registration Panel - Student Use Case
- * @author larry tsao (wakingstardust(
+ * @author larry tsao (wakingstardus)
  */
 public class RegistrationJPanel extends javax.swing.JPanel {
 
