@@ -4,17 +4,42 @@
  */
 package UserInterface.WorkAreas.StudentRole.MyProfileWorkResp;
 
+import Business.Business;
+import Business.Profiles.StudentProfile;
+import javax.swing.JPanel;
+import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
+
 /**
- *
- * @author wakingstardust
+ * My Profile Panel - Student Use Case
+ * @author larry tsao (wakingstardust)
  */
 public class StudentMyProfileJPanel extends javax.swing.JPanel {
+    
+    private Business business;
+    private StudentProfile student;
+    private JPanel CardSequencePanel;
 
     /**
      * Creates new form StudentMyProfileJPanel
      */
-    public StudentMyProfileJPanel() {
+    public StudentMyProfileJPanel(Business b, StudentProfile spp, JPanel clp) {
+        
+        
+        this.business = b;
+        this.student = spp;
+        this.CardSequencePanel = clp;
+        
         initComponents();
+        
+        loadProfile();
+
+    }
+    
+      private void loadProfile() {
+          
+        txtName.setText(student.getPerson().getPersonId());
+        txtRole.setText(student.getRole());
+        
     }
 
     /**
@@ -38,6 +63,7 @@ public class StudentMyProfileJPanel extends javax.swing.JPanel {
 
         lblName.setText("Name");
 
+        txtName.setEditable(false);
         txtName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNameActionPerformed(evt);
@@ -45,6 +71,8 @@ public class StudentMyProfileJPanel extends javax.swing.JPanel {
         });
 
         lblRole.setText("Role");
+
+        txtRole.setEditable(false);
 
         btnBack.setText("<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -107,7 +135,7 @@ public class StudentMyProfileJPanel extends javax.swing.JPanel {
 
         CardSequencePanel.removeAll();
         StudentWorkAreaJPanel workArea = new StudentWorkAreaJPanel(business, student, CardSequencePanel);
-
+        
         CardSequencePanel.add("student", workArea);
         CardSequencePanel.revalidate();
         CardSequencePanel.repaint();

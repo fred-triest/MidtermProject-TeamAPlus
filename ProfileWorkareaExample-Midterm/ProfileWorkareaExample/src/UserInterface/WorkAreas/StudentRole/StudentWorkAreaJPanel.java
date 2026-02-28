@@ -17,12 +17,14 @@ import UserInterface.WorkAreas.StudentRole.CourseWorkWorkResp.CourseWorkJPanel;
 import UserInterface.WorkAreas.StudentRole.GraduationAuditWorkResp.GraduationAuditJPanel;
 import UserInterface.WorkAreas.StudentRole.RegistrationWorkResp.RegistrationJPanel;
 import UserInterface.WorkAreas.StudentRole.TranscriptWorkResp.TranscriptJPanel;
+import UserInterface.WorkAreas.StudentRole.MyProfileWorkResp.StudentMyProfileJPanel;
 
 
 
 /**
  *
  * @author kal
+ * @author larry tsao (wakingstardust)
  */
 public class StudentWorkAreaJPanel extends javax.swing.JPanel {
 
@@ -189,8 +191,13 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
-
-
+            
+        CardSequencePanel.removeAll();
+        StudentMyProfileJPanel mp = new StudentMyProfileJPanel(business, student, CardSequencePanel);
+        
+        CardSequencePanel.add("MyProfile", mp);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        
 
 }//GEN-LAST:event_jButton9ActionPerformed
 
