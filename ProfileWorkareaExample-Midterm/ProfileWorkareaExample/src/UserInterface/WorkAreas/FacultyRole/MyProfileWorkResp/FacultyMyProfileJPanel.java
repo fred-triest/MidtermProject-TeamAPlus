@@ -127,6 +127,9 @@ public class FacultyMyProfileJPanel extends javax.swing.JPanel {
     private void loadProfileData() {
         txtName.setText(facultyprofile.getPerson().getPersonId());
         txtRole.setText(facultyprofile.getRole());
+        txtDept.setText(facultyprofile.getDepartment());
+        txtEmail.setText(facultyprofile.getEmail());
+        txtPhone.setText(facultyprofile.getPhone());
     }
 
     // saves updated profile info with validation
@@ -145,6 +148,11 @@ public class FacultyMyProfileJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please enter a valid email address.");
             return;
         }
+
+        // save to the faculty profile object so it persists
+        facultyprofile.setDepartment(dept);
+        facultyprofile.setEmail(email);
+        facultyprofile.setPhone(phone);
 
         JOptionPane.showMessageDialog(this, "Profile updated successfully.");
     }
