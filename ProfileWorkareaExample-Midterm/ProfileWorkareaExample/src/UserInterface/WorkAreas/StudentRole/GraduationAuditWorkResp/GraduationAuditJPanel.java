@@ -4,17 +4,74 @@
  */
 package UserInterface.WorkAreas.StudentRole.GraduationAuditWorkResp;
 
+import Business.Business;
+import Business.Profiles.StudentProfile;
+import Business.Course.CourseOffer;
+import Business.Course.SeatAssignment;
+import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  * Graduation Audit Panel - Student Use Case
  * @author larry tsao (wakingstardust)
  */
 public class GraduationAuditJPanel extends javax.swing.JPanel {
+    
+    private Business business;
+    private StudentProfile student;
+    private JPanel CardSequencePanel;
+    private final int REQUIRED_CREDITS = 120;
 
     /**
      * Creates new form GraduationAuditJPanel
      */
-    public GraduationAuditJPanel() {
+    public GraduationAuditJPanel(Business b, StudentProfile spp, JPanel clp) {
+        
+        this.business = b;
+        this.student = spp;
+        this.CardSequencePanel = clp;
+        
         initComponents();
+        
+        performAudit();
+        
+    }
+    
+    private void performAudit() {
+        
+        DefaultTableModel model = (DefaultTableModel) tblCourses.getModel();
+        
+        model.setRowCount(0);
+        int totalCredits = 0;
+
+        for (CourseOffer co : business.getCourseSchedule().getCourseoffers()) {
+            
+            for (SeatAssignment sa : co.getSeatassignments()) {
+                
+                if (sa.getStudent().getPersonId().equals(student.getPerson().getPersonId())) {
+                    
+                    Object[] row = new Object[3];
+                    row[0] = co.getCourse().toString();
+                    row[1] = co.getCourse().getCredits();
+                    row[2] = sa.getGrade();
+                    
+                    model.addRow(row);
+                    
+                    totalCredits += co.getCourse().getCredits();
+                }
+            }
+        }
+
+        txtCredits.setText(String.valueOf(totalCredits));
+        
+        if (totalCredits >= REQUIRED_CREDITS) {
+            txtStatus.setText("On Track for Graduation");
+            
+        } else {
+            txtStatus.setText((REQUIRED_CREDITS - totalCredits) + " more credits needed");
+            
+        }
     }
 
     /**
@@ -27,18 +84,17 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         lblTitle = new javax.swing.JLabel();
-        lblEnrolled = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCourses = new javax.swing.JTable();
-        lblEnrolled1 = new javax.swing.JLabel();
-        lblEnrolled2 = new javax.swing.JLabel();
+        lblCredits = new javax.swing.JLabel();
+        txtCredits = new javax.swing.JTextField();
+        lblRequired = new javax.swing.JLabel();
+        lblStatus = new javax.swing.JLabel();
+        txtStatus = new javax.swing.JTextField();
         btnBack = new javax.swing.JButton();
 
         lblTitle.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         lblTitle.setText("Graduation Audit");
-
-        lblEnrolled.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        lblEnrolled.setText("Credits Required: 120  ");
 
         tblCourses.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -61,11 +117,23 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tblCourses);
 
-        lblEnrolled1.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        lblEnrolled1.setText("Total Credits Enrolled: 0  ");
+        lblCredits.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        lblCredits.setText("Total Credits Enrolled: ");
 
-        lblEnrolled2.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        lblEnrolled2.setText("Status: Calculating...  ");
+        txtCredits.setEditable(false);
+        txtCredits.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCreditsActionPerformed(evt);
+            }
+        });
+
+        lblRequired.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        lblRequired.setText("Credits Required: 120");
+
+        lblStatus.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        lblStatus.setText("Status:");
+
+        txtStatus.setEditable(false);
 
         btnBack.setText("<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -81,22 +149,27 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(213, 213, 213)
+                        .addComponent(lblTitle))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnBack)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 585, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(13, 13, 13)
-                                .addComponent(lblEnrolled1)
-                                .addGap(58, 58, 58)
-                                .addComponent(lblEnrolled)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblEnrolled2)
-                                .addGap(19, 19, 19))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(213, 213, 213)
-                        .addComponent(lblTitle)))
-                .addContainerGap(37, Short.MAX_VALUE))
+                                .addGap(19, 19, 19)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblRequired, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblCredits)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtCredits, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblStatus)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(35, 35, 35)))))))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,15 +177,18 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
                 .addGap(33, 33, 33)
                 .addComponent(lblTitle)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEnrolled1)
-                    .addComponent(lblEnrolled)
-                    .addComponent(lblEnrolled2))
-                .addGap(29, 29, 29)
+                    .addComponent(lblCredits)
+                    .addComponent(lblStatus)
+                    .addComponent(txtCredits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(lblRequired)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addComponent(btnBack)
-                .addGap(41, 41, 41))
+                .addGap(25, 25, 25))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -121,21 +197,27 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
 
         CardSequencePanel.removeAll();
         StudentWorkAreaJPanel workArea = new StudentWorkAreaJPanel(business, student, CardSequencePanel);
-
+        
         CardSequencePanel.add("student", workArea);
         CardSequencePanel.revalidate();
         CardSequencePanel.repaint();
 
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void txtCreditsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCreditsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCreditsActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblEnrolled;
-    private javax.swing.JLabel lblEnrolled1;
-    private javax.swing.JLabel lblEnrolled2;
+    private javax.swing.JLabel lblCredits;
+    private javax.swing.JLabel lblRequired;
+    private javax.swing.JLabel lblStatus;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTable tblCourses;
+    private javax.swing.JTextField txtCredits;
+    private javax.swing.JTextField txtStatus;
     // End of variables declaration//GEN-END:variables
 }
