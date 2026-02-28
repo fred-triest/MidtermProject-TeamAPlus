@@ -4,18 +4,82 @@
  */
 package UserInterface.WorkAreas.StudentRole.RegistrationWorkResp;
 
+import Business.Business;
+import Business.Profiles.StudentProfile;
+import Business.Course.CourseOffer;
+import Business.Course.SeatAssignment;
+import java.util.ArrayList;
+import javax.swing.JPanel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+
 /**
- *
- * @author wakingstardust
+ * Registration Panel - Student Use Case
+ * @author larry tsao (wakingstardust(
  */
 public class RegistrationJPanel extends javax.swing.JPanel {
 
+    
+    private Business business;
+    private StudentProfile student;
+    private JPanel CardSequencePanel;
+    private ArrayList<CourseOffer> availableCourses;
+    
+    
     /**
      * Creates new form RegistrationJPanel
      */
-    public RegistrationJPanel() {
+    public RegistrationJPanel(Business b, StudentProfile spp, JPanel clp) {
+        
+        this.business = b;
+        this.student = spp;
+        this.CardSequencePanel = clp;
+        this.availableCourses = new ArrayList();
+        
         initComponents();
+        
+        loadAvailableCourses();
+        loadMyEnrollments();
+        
     }
+    
+    // Populates the combo box with all course offerings
+    private void loadAvailableCourses() {
+        cboAvailable.removeAllItems();
+        
+        availableCourses.clear();
+        
+        for (CourseOffer co : business.getCourseSchedule().getCourseoffers()) {
+            cboAvailable.addItem(co.getCourse().toString() + " (" + co.getSemester() + ")");
+            availableCourses.add(co);
+            
+        }
+    }
+    
+    // Populates the table with courses the student is already enrolled in
+    private void loadMyEnrollments() {
+        
+        DefaultTableModel model = (DefaultTableModel) tblEnrolled.getModel();
+        model.setRowCount(0);
+        
+        for (CourseOffer co : business.getCourseSchedule().getCourseoffers()) {
+            
+            for (SeatAssignment sa : co.getSeatassignments()) {
+                
+                if (sa.getStudent().getPersonId().equals(student.getPerson().getPersonId())) {
+                    
+                    Object[] row = new Object[3];
+                    row[0] = co.getCourse().toString();
+                    row[1] = co.getSemester();
+                    row[2] = co.getCourse().getCredits();
+                    
+                    model.addRow(row);
+                }
+            }
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,19 +90,205 @@ public class RegistrationJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblTitle = new javax.swing.JLabel();
+        lblAvailable = new javax.swing.JLabel();
+        cboAvailable = new javax.swing.JComboBox<>();
+        btnEnroll = new javax.swing.JButton();
+        lblEnrolled = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblEnrolled = new javax.swing.JTable();
+        btnDrop = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
+
+        lblTitle.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
+        lblTitle.setText("Course Registration");
+
+        lblAvailable.setText("Available Courses:");
+
+        cboAvailable.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnEnroll.setText("Enroll");
+        btnEnroll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnrollActionPerformed(evt);
+            }
+        });
+
+        lblEnrolled.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        lblEnrolled.setText(" My Current Enrollments:");
+
+        tblEnrolled.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Course", "Semester", "Credits"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblEnrolled);
+
+        btnDrop.setText("Drop");
+        btnDrop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDropActionPerformed(evt);
+            }
+        });
+
+        btnBack.setText("<< Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(lblAvailable)
+                .addGap(18, 18, 18)
+                .addComponent(cboAvailable, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnEnroll)
+                .addGap(49, 49, 49)
+                .addComponent(btnDrop)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(197, 197, 197)
+                        .addComponent(lblTitle))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(225, 225, 225)
+                        .addComponent(lblEnrolled))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnBack)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 585, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(lblTitle)
+                .addGap(18, 18, 18)
+                .addComponent(lblEnrolled)
+                .addGap(8, 8, 8)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAvailable)
+                    .addComponent(cboAvailable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEnroll)
+                    .addComponent(btnDrop))
+                .addGap(49, 49, 49)
+                .addComponent(btnBack)
+                .addGap(18, 18, 18))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed
+        // TODO add your handling code here:
+        
+        int index = cboAvailable.getSelectedIndex();
+        
+        if (index < 0) {
+            
+            JOptionPane.showMessageDialog(this, "Please select a course.", "No Selection", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        CourseOffer selected = availableCourses.get(index);
+        
+        for (SeatAssignment sa : selected.getSeatassignments()) {
+            
+            if (sa.getStudent().getPersonId().equals(student.getPerson().getPersonId())) {
+                JOptionPane.showMessageDialog(this, "You are already enrolled in this course.", "Already Enrolled", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        }
+        
+        selected.assignSeat(student.getPerson());
+        loadMyEnrollments();
+
+        JOptionPane.showMessageDialog(this, "Enrolled successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        
+        
+    }//GEN-LAST:event_btnEnrollActionPerformed
+
+    private void btnDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDropActionPerformed
+        // TODO add your handling code here:
+        
+        int selectedRow = tblEnrolled.getSelectedRow();
+        
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a course to drop.", "No Selection", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        String courseName = (String) tblEnrolled.getValueAt(selectedRow, 0);
+        
+        for (CourseOffer co : business.getCourseSchedule().getCourseoffers()) {
+            
+            if (co.getCourse().toString().equals(courseName)) {
+                SeatAssignment toRemove = null;
+                
+                for (SeatAssignment sa : co.getSeatassignments()) {
+                    if (sa.getStudent().getPersonId().equals(student.getPerson().getPersonId())) {
+                        
+                        toRemove = sa;
+                        break;
+                        
+                    }
+                }
+                
+                if (toRemove != null) {
+                    co.getSeatassignments().remove(toRemove);
+                    
+                }
+                break;
+            }
+        }
+        
+        loadMyEnrollments();
+        
+        JOptionPane.showMessageDialog(this, "Course dropped.", "Dropped", JOptionPane.INFORMATION_MESSAGE);
+        
+    }//GEN-LAST:event_btnDropActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        
+        CardSequencePanel.remove(this);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        
+    }//GEN-LAST:event_btnBackActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnDrop;
+    private javax.swing.JButton btnEnroll;
+    private javax.swing.JComboBox<String> cboAvailable;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblAvailable;
+    private javax.swing.JLabel lblEnrolled;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JTable tblEnrolled;
     // End of variables declaration//GEN-END:variables
 }
