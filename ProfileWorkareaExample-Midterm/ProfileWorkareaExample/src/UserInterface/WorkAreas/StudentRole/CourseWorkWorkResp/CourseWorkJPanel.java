@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  * Course Work Panel - Student Use Case
- * @author larrytsao (wakingstardust)
+ * @author larry tsao (wakingstardust)
  */
 public class CourseWorkJPanel extends javax.swing.JPanel {
 
