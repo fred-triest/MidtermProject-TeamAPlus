@@ -114,14 +114,14 @@ public class ManageCoursesJPanel extends javax.swing.JPanel {
         add(saveGradeBtn);
         saveGradeBtn.setBounds(250, 380, 120, 25);
 
-        viewCourseDetailsBtn.setText("View/Edit Course Details");
+        viewCourseDetailsBtn.setText("View/Edit Details");
         viewCourseDetailsBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 viewCourseDetailsBtnActionPerformed(evt);
             }
         });
         add(viewCourseDetailsBtn);
-        viewCourseDetailsBtn.setBounds(390, 380, 180, 25);
+        viewCourseDetailsBtn.setBounds(460, 60, 150, 25);
 
         backBtn.setText("<< Back");
         backBtn.addActionListener(new java.awt.event.ActionListener() {
