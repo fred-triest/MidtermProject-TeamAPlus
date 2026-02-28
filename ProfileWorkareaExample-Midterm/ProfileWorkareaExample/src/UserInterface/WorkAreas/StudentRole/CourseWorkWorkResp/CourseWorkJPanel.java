@@ -70,8 +70,8 @@ public class CourseWorkJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         lblTitle = new javax.swing.JLabel();
-        tblCourses = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        JScrollPanel = new javax.swing.JScrollPane();
+        tblCourses = new javax.swing.JTable();
         lblAssignment = new javax.swing.JLabel();
         txtAssignment = new javax.swing.JTextField();
         btnSubmit = new javax.swing.JButton();
@@ -80,7 +80,7 @@ public class CourseWorkJPanel extends javax.swing.JPanel {
         lblTitle.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         lblTitle.setText("Course Work");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblCourses.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -99,7 +99,7 @@ public class CourseWorkJPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tblCourses.setViewportView(jTable1);
+        JScrollPanel.setViewportView(tblCourses);
 
         lblAssignment.setText("Assignment Name:");
 
@@ -130,16 +130,15 @@ public class CourseWorkJPanel extends javax.swing.JPanel {
                         .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnBack)
-                            .addComponent(tblCourses, javax.swing.GroupLayout.PREFERRED_SIZE, 568, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(JScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 568, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(lblAssignment)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtAssignment, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(btnSubmit)))
                 .addContainerGap(41, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(lblAssignment)
-                .addGap(18, 18, 18)
-                .addComponent(txtAssignment, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSubmit)
-                .addGap(57, 57, 57))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,7 +146,7 @@ public class CourseWorkJPanel extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addComponent(lblTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tblCourses, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(JScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblAssignment)
@@ -181,12 +180,12 @@ public class CourseWorkJPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane JScrollPanel;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnSubmit;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblAssignment;
     private javax.swing.JLabel lblTitle;
-    private javax.swing.JScrollPane tblCourses;
+    private javax.swing.JTable tblCourses;
     private javax.swing.JTextField txtAssignment;
     // End of variables declaration//GEN-END:variables
 }
