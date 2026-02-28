@@ -23,9 +23,6 @@ import javax.swing.JOptionPane;
  */
 public class AdministerPersonJPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ManageSuppliersJPanel
-     */
     JPanel CardSequencePanel;
     Business business;
     ManagePersonsJPanel managePersonsPanel;
@@ -83,12 +80,6 @@ public class AdministerPersonJPanel extends javax.swing.JPanel {
         lblName.setText("Name:");
         add(lblName);
         lblName.setBounds(120, 100, 70, 20);
-
-        txtName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNameActionPerformed(evt);
-            }
-        });
         add(txtName);
         txtName.setBounds(210, 100, 190, 23);
 
@@ -98,12 +89,6 @@ public class AdministerPersonJPanel extends javax.swing.JPanel {
         lblUsername.setText("Username:");
         add(lblUsername);
         lblUsername.setBounds(120, 140, 70, 20);
-
-        txtUsername.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsernameActionPerformed(evt);
-            }
-        });
         add(txtUsername);
         txtUsername.setBounds(210, 140, 190, 23);
 
@@ -113,12 +98,6 @@ public class AdministerPersonJPanel extends javax.swing.JPanel {
         lblPassword.setText("Password:");
         add(lblPassword);
         lblPassword.setBounds(120, 180, 70, 20);
-
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
-            }
-        });
         add(txtPassword);
         txtPassword.setBounds(210, 180, 190, 23);
 
@@ -144,31 +123,22 @@ public class AdministerPersonJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
-        // TODO add your handling code here:
+        // Removes this panel and returns to previous view
         CardSequencePanel.remove(this);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
     }//GEN-LAST:event_BackActionPerformed
 
-    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNameActionPerformed
-
-    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsernameActionPerformed
-
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPasswordActionPerformed
-
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        // Validate fields
+        // Validates fields and registers new person with role and account
+        
+        // Input collection - trim() for whitespace
         String name = txtName.getText().trim();
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
         String role = (String) cmbRole.getSelectedItem();
         
+        // Validation - validate every field with validation error messages
         if (name.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Name is required", "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -186,10 +156,10 @@ public class AdministerPersonJPanel extends javax.swing.JPanel {
             return;
         }
         
-        // Create person
+        // Person creation - Person in PersonDirectory (base layer, every user has a person
         Person newPerson = business.getPersonDirectory().newPerson(name);
         
-        // Assign Profile from selected role
+        // Profile assignment - Creates profile and adds to directory. How ACL knows what each person can do
         if (role.equals("Admin")) {
             business.getEmployeeDirectory().newEmployeeProfile(newPerson);
         } else if (role.equals("Faculty")) {
@@ -198,14 +168,15 @@ public class AdministerPersonJPanel extends javax.swing.JPanel {
             business.getStudentDirectory().newStudentProfile(newPerson);
         }
         
-        // Create user
+        // User creation - links profile we created with un and pw (checked at login)
         business.getUserAccountDirectory().newUserAccount(getProfileForPerson(newPerson, role), username, password);
         
         JOptionPane.showMessageDialog(this, "Registration successful!","Registration Success", JOptionPane.INFORMATION_MESSAGE);
         
+        // Post registration cleanup - table refreshes with new person
         managePersonsPanel.refreshTable();
         
-        // Clear fields
+        // Clear fields so admin can create another user right away
         txtName.setText("");
         txtUsername.setText("");
         txtPassword.setText("");
@@ -228,9 +199,7 @@ public class AdministerPersonJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 
-    /**
-     * Gets the profile for the new person based on their role.
-     */
+    //Gets the profile for the new person based on their role.
     private Profile getProfileForPerson(Person p, String role) {
         if (role.equals("Admin")) {
             return business.getEmployeeDirectory().findEmployee(p.getPersonId());

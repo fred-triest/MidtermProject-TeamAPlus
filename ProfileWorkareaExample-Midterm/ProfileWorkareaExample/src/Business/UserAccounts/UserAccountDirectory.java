@@ -10,8 +10,8 @@ import Business.Profiles.Profile;
 import java.util.ArrayList;
 
 /**
- *
- * @author kal bugrara
+ * Stores all UserAccount objects
+ * @author fredtriest
  */
 public class UserAccountDirectory {
     
@@ -23,6 +23,7 @@ public class UserAccountDirectory {
 
     }
 
+    // Creates new user account and adds to directory
     public UserAccount newUserAccount(Profile p, String un, String pw) {
 
         UserAccount ua = new UserAccount (p,  un,  pw);
@@ -30,6 +31,7 @@ public class UserAccountDirectory {
         return ua;
     }
 
+    // Finds and returns a user account by person id
     public UserAccount findUserAccount(String id) {
 
         for (UserAccount ua : useraccountlist) {
@@ -40,8 +42,12 @@ public class UserAccountDirectory {
         }
             return null; //not found after going through the whole list
          }
-     public UserAccount AuthenticateUser(String un, String pw) {
-
+    
+    // Returns user account if login details are valid, null otherwise
+    public UserAccount AuthenticateUser(String un, String pw) {
+         
+        if (un == null || pw == null)
+             return null;
         for (UserAccount ua : useraccountlist) {
 
             if (ua.IsValidUser(un, pw)) {
@@ -49,9 +55,18 @@ public class UserAccountDirectory {
             }
         }
             return null; //not found after going through the whole list
-         }   
-     public ArrayList<UserAccount> getUserAccountList()
+         } 
+    
+    // Returns list of all user accounts
+    public ArrayList<UserAccount> getUserAccountList()
      {
          return useraccountlist;
+     }
+     
+     // Removes a user from the directory
+    public void removeUserAccount(UserAccount ua) {
+         if (ua == null)
+             return;
+         useraccountlist.remove(ua);
      }
 }
